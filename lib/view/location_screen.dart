@@ -13,88 +13,88 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<Weather>{
-        future: controller.getWeatherData(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error.toString()}"),
-            );
-          }
-          else if(snapshot.hasData) {
-            var data = snapshot.data;
-            var weatherIcon = weatherStatus.getWeatherIcon(data!.cod);
+      body: FutureBuilder<Weather>(
+          future: controller.getWeatherData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("${snapshot.error.toString()}"),
+              );
+            } else if (snapshot.hasData) {
+              var data = snapshot.data;
+              var weatherIcon = weatherStatus.getWeatherIcon(data!.cod, data!.condition);//set this one to be a getter method
 
-            return Container(
-              decoration: BoxDecoration(
-                image: DecorationImage('images/location_background.jpg'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.8), BlendMode.dstATop
+              return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage('images/location_background.jpg'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        Colors.white.withOpacity(0.8), BlendMode.dstATop),
+                  ),
                 ),
-              ),
-              constraints: BoxConstraints.expand(),
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextButton(onPressed: () {
-                          controller.getWeatherData();
-                        },
-                        child: const Icon(
-                          Icons.near_me,
-                          size:50.0,
-                        ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Icon(
-                            Icons.location_city,
-                            size: 50.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding:EdgeInsets.only(left: 15.0),
-                      child: Row(
+                constraints: BoxConstraints.expand(),
+                child: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            "${data.main.temp.toInt().toString()}", //add degree symbol at the end
-                            style: kTempTextStyle,
+                          TextButton(
+                            onPressed: () {
+                              controller.getWeatherData();
+                            },
+                            child: const Icon(
+                              Icons.near_me,
+                              size: 50.0,
+                            ),
                           ),
-                          Text(
-                            weatherStatus.getWeatherIcon(data, cod),
-                            style: kConditionTextStyle,
+                          TextButton(
+                            onPressed: () {},
+                            child: const Icon(
+                              Icons.location_city,
+                              size: 50.0,
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 15.0),
-                      child: Text(
-                        "${weatherStatus.getMessage(data.main.temp.toInt())} in ${data.name}",
-                        textAlign: TextAlign.right,
-                        style: kMessageTextStyle,
+                      Padding(
+                        padding: EdgeInsets.only(left: 15.0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "${data.main.temp.toInt().toString()}°", //degree symbol
+                              style: kTempTextStyle,
+                            ),
+                            Text(
+                              weatherStatus.getWeatherIcon(data.cod, data!.condition),
+                              style: kConditionTextStyle,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Text(
+                          "${weatherStatus.getMessage(data.main.temp.toInt())} in ${data.name}!",
+                          textAlign: TextAlign.right,
+                          style: kMessageTextStyle,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+              );
+            }
+            return const Center(
+              child: SpinKitDoubleBounce(
+                color: Colors.blue,
+                size: 50.0,
               ),
             );
-          }
-          return const Center(
-            child: SpinKitDoubleBounce(
-              color: Colors.blue,
-              size: 50.0,
-            ),
-          );
-        }
-      },
+          }),
     );
   }
 }

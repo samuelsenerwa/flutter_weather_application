@@ -54,6 +54,8 @@ class Weather {
         cod: json["cod"],
       );
 
+  get condition => null;
+
   Map<String, dynamic> toJson() => {
         "coord": coord.toJson(),
         "Weather": List<dynamic>.from(weather.map((x) => x.toJson())),
