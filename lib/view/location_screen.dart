@@ -22,7 +22,7 @@ class LocationScreen extends StatelessWidget {
               );
             } else if (snapshot.hasData) {
               var data = snapshot.data;
-              var weatherIcon = weatherStatus.getWeatherIcon(data!.cod);//set this one to be a getter method
+              var weatherIcon = weatherStatus.getWeatherIcon(data!.cod);
 
               return Container(
                 decoration: BoxDecoration(
@@ -61,11 +61,11 @@ class LocationScreen extends StatelessWidget {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                        padding: EdgeInsets.only(left: 15.0),
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "${data.main.temp.toInt().toString()}°", //degree symbol
+                              "${data.main.temp.toInt().toString()}°",
                               style: kTempTextStyle,
                             ),
                             Text(

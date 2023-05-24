@@ -14,9 +14,14 @@ class BaseService {
       "Content-Type": "application/json",
       "Connection": "keep-alive",
     },
-    connectTimeout: const Duration(milliseconds: 60 * 1000),
+    connectTimeout: const Duration(milliseconds: 60 * 1000), //the connectTimeout should not be an int
     receiveTimeout: const Duration(milliseconds: 60 * 1000),
-  ))..interceptors.add(LoggingInterceptor());
+  ))
+    ..interceptors.add(LoggingInterceptor());
+  //  connectTimeout: 60 * 1000,
+  //   receiveTimeout: 60 * 1000))
+  //   ..interceptors.add(LoggingInterceptor());
+
 
   Future<Response> request(String url, {dynamic body, String? method}) async {
     var token = LocalStorage.getToken();
@@ -29,20 +34,20 @@ class BaseService {
                 token != null ? {'authorization': 'Bearer $token'} : null));
     return res;
   }
+}
 
-  handleError(DioError error) { //if you want the handle error to be invoked on weather service make sure to make handle errror be static String
-    print(error.response.toString());
-    if (error.message!.contains('SocketException')) {
-      return 'Cannot connect. Check that you have an internet connection';
-    }
+handleError(DioError error) {
+  print(error.response.toString());
+  if (error.message?.contains('SocketException') == true) { //fixed the null check issue
+    return 'Cannot connect. Check that you have internet connection';
+  }
 
-    if (error.type == DioErrorType.connectionTimeout) {
-      return 'Connection timed out. Please retry';
-    }
+  if (error.type == DioErrorType.connectionTimeout) { //solved connectTiemout
+    return 'Connection timed out. Please retry.';
+  }
 
-    if (error.response == null || error.response!.data is String) {
-      return 'Something went wrong. Please try again later';
-    }
+  if (error.response == null || error.response!.data is String) {
     return 'Something went wrong. Please try again later';
   }
+  return 'Something went wrong. Please try again later';
 }

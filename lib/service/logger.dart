@@ -30,7 +30,8 @@ class LoggingInterceptor extends Interceptor {
     print("HEADER--> ${options.method} ${options.headers}");
     print("PATH --> ${options.method} ${options.path}");
     print("DATA --> ${options.data} ${options.data}");
-    print("qweryPara -> ${options.queryParameters} ${options.queryParameters}");
+    print(
+        "qweryPara --> ${options.queryParameters} ${options.queryParameters}");
     print("Content type: ${options.contentType}");
     print("<-- END HTTP");
     super.onRequest(options, handler);

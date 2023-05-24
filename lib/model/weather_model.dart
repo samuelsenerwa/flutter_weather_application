@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 Weather weatherFromJson(String str) => Weather.fromJson(json.decode(str));
 
 String weatherToJson(Weather data) => json.encode(data.toJson());
@@ -54,11 +52,9 @@ class Weather {
         cod: json["cod"],
       );
 
-  get condition => null;
-
   Map<String, dynamic> toJson() => {
         "coord": coord.toJson(),
-        "Weather": List<dynamic>.from(weather.map((x) => x.toJson())),
+        "weather": List<dynamic>.from(weather.map((x) => x.toJson())),
         "base": base,
         "main": main.toJson(),
         "visibility": visibility,
@@ -83,6 +79,7 @@ class Clouds {
   factory Clouds.fromJson(Map<String, dynamic> json) => Clouds(
         all: json["all"],
       );
+
   Map<String, dynamic> toJson() => {
         "all": all,
       };
@@ -131,7 +128,7 @@ class Main {
         tempMin: json["temp_min"].toDouble(),
         tempMax: json["temp_max"].toDouble(),
         pressure: json["pressure"],
-        humidity: json["humidty"],
+        humidity: json["humidity"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -211,7 +208,7 @@ class Wind {
   });
 
   double speed;
-  double deg;
+  int deg;
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
         speed: json["speed"].toDouble(),
