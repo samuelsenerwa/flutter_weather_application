@@ -53,7 +53,7 @@ class WeatherSnackBars {
           )
         ],
       ),
-      margin: EdgeInsets.all(24),
+      margin: const EdgeInsets.all(24),
       snackPosition: SnackPosition.TOP,
       borderRadius: 8,
       icon: const Icon(

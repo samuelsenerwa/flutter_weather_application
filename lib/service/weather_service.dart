@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'base_service.dart';
 
 class WeatherService {
-  BaseModel service = BaseModel(); // Use BaseModel instance
+  BaseService service = BaseService(); // Use BaseModel instance
 
   static const String apiKey = "aad16d107512edccaa95fad0a827e83b"; // Replace with your API key
 
@@ -20,7 +20,7 @@ class WeatherService {
       print("_++++++++++++++++++${response.statusCode}");
       return response;
     } on DioError catch (e) {
-      throw BaseModel.handleError(e); // Use the handleError method from BaseModel
+      throw service.handleError(e); // Use the handleError method from BaseModel
     }
   }
 }

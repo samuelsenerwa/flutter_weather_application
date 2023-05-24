@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'local_storage.dart';
 import 'logger.dart';
 
-class BaseModel {
+class BaseService {
   final Dio _dio = Dio(BaseOptions(
     baseUrl: "https://samples.openweathermap.org",
     validateStatus: (status) {
@@ -14,8 +14,8 @@ class BaseModel {
       "Content-Type": "application/json",
       "Connection": "keep-alive",
     },
-    connectTimeout: Duration(milliseconds: 60 * 1000),
-    receiveTimeout: Duration(milliseconds: 60 * 1000),
+    connectTimeout: const Duration(milliseconds: 60 * 1000),
+    receiveTimeout: const Duration(milliseconds: 60 * 1000),
   ))..interceptors.add(LoggingInterceptor());
 
   Future<Response> request(String url, {dynamic body, String? method}) async {
@@ -30,7 +30,7 @@ class BaseModel {
     return res;
   }
 
-  static String handleError(DioError error) {
+  handleError(DioError error) { //if you want the handle error to be invoked on weather service make sure to make handle errror be static String
     print(error.response.toString());
     if (error.message!.contains('SocketException')) {
       return 'Cannot connect. Check that you have an internet connection';

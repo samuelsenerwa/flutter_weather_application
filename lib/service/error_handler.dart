@@ -12,7 +12,6 @@ dynamic errorHandler(Response response) {
       throw 'Server Errror pls retry later';
     case 403:
       throw 'Error occured pls check internet and retry';
-    case 500:
     default:
       throw 'Error occured retry';
   }

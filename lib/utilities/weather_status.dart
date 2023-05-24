@@ -1,5 +1,5 @@
 class WeatherStatus {
-  String getWeatherIcon(int condition, cod) {
+  String getWeatherIcon(int condition) {//add cod
     if (condition < 300) {
       return '🌩';
     } else if (condition < 400) {
